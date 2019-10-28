@@ -48,27 +48,27 @@ def iniparser(fpath):
 		if(config.has_option(qs,'content')):
 			qlist['content']=config[qs]['content']
 		else:
-			qlist['content']=None
+			qlist['content']=''
 		if(config.has_option(qs,'difficulty')):
 			qlist['difficulty']=config[qs]['difficulty']
 		else:
-			qlist['difficulty']=None
+			qlist['difficulty']=''
 		if(config.has_option(qs,'tags')):
 			qlist['tags']=process_tags(config[qs]['tags'])
 		else:
-			qlist['tags']=None
+			qlist['tags']=''
 		if(config.has_option(qs,'chapter')):
 			qlist['chapter']=process_tags(config[qs]['chapter'])
 		else:
-			qlist['chapter']=None
+			qlist['chapter']=''
 		if(config.has_option(qs,'section')):
 			qlist['section']=process_tags(config[qs]['section'])
 		else:
-			qlist['section']=None
+			qlist['section']=''
 		if(config.has_option(qs,'answer')):
 			qlist['answer']=process_tags(config[qs]['answer'])
 		else:
-			qlist['answer']=None
+			qlist['answer']=''
 		cv=1
 		total_sum=0
 		while config.has_option(qs,'part_'+str(cv)):
@@ -85,7 +85,7 @@ def iniparser(fpath):
 			if(config.has_option(qs,'answer_'+str(cv2))):
 				qlist['answer_'+str(cv2)]=config[qs]['answer_'+str(cv2)]
 			else:
-				qlist['answer_'+str(cv2)]=None
+				qlist['answer_'+str(cv2)]=''
 			cv2=cv2+1
 		cv3=1
 		while cv3<cv:
