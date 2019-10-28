@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import UploadFileForm
-from .functions import handle_uploaded_file
+#from .functions import handle_uploaded_file
 from utils.iniparser import iniparser
 import os
 from .models import Qbank_Main, Qbank_sub, Users
