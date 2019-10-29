@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+	{% if user.is_prof %}<h1>professor</h1>
+		{% else %}<h1>student</h1>{% endif %}
+  <h1>Hi {{ user.username }}!</h1>
+  <p><a href="{% url 'logout' %}">logout</a></p>
+  <p><a href="{% url 'password_reset' %}">reset password</a></p>
+{% else %}
+  <h1>WELCOME</h1>
+  <p>Click</p> <a href="{% url 'login' %}">here</a> <p>to login</p>
+{% endif %}
+{% endblock %}
