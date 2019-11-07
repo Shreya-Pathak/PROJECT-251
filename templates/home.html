@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load custom_tags %}  
+  <h2>Welcome, {{ user.username }}!</h2>
+  <h4>Your email is set to {{ user.email }} </h4>
+  {% if request.user|has_group:"profs" %} 
+  	<div class="basic">
+		{% include "upload.html" %}    
+	</div>
+{% endif %}
+{% endblock %}
