@@ -15,8 +15,29 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-
+from django.conf.urls import url
+from core import views as core_views
+from django.contrib.auth import views as auth_views
+"""
 urlpatterns = [
+	#path('', include('core.urls')),\
+	url(r'^$', views.home, name='home'),
 	path('qbank/', include('qbank.urls')),
     path('admin/', admin.site.urls),
+]
+"""
+
+
+
+urlpatterns = [
+	path('admin/', admin.site.urls),
+    url(r'^home$', core_views.home, name='home'),
+    url(r'^login/$',auth_views.LoginView.as_view(template_name="login.html"), name="login"),
+    url(r'^logout/$',auth_views.LogoutView.as_view(next_page="login"), name="logout"),
+    url(r'^signup/$', core_views.signup, name='signup'),
+    # url(r'^signup/$', core_views.update_profile, name='signup'),
+    url(r'^password/$', core_views.change_password, name='change_password'),
+   	url(r'^email/$', core_views.change_email, name='change_email'),
+   	path('qbank/', include('qbank.urls')),
+   	
 ]
