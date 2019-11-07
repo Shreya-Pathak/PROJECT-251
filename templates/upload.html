@@ -17,8 +17,14 @@
                         <table>
                             {{ form.as_table }}
                         </table>
-                        <input type="submit" class="btn btn-primary btn-lg" name="register">
+                        <input type="submit" class="btn btn-primary btn-lg" name="register" onclick="document.upload.submit()">
                 </div>
+                <select id="org" name="org_list" onChange="redirectUrl()">
+  <option  value="" selected="selected">---SELECT---</option>
+  {% for org in organisation %}
+   <option value="{{org.id}}">{{org.name|capfirst}}</option>
+  {% endfor %}
+</select>
             </center>
             {% endblock %}
         </body>

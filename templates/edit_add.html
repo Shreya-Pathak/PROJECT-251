@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<script type="text/javascript">
+  function myf(){
+    alert('Question submitted');
+  }
+</script>
+<script type="text/javascript">
+      function myf1(){
+        //alert('boo')
+        window.location.href="{% url 'home'%}"
+        
+      }
+    </script>
+<body>
+  
+   {% for owner_form in owner_forms %}
+   hiyooo22
+   
+    
+      <form class="petname_form" method="post">{% csrf_token %}   
+         yoyo
+         {{ owner_form.author_form.as_p }}
+         bro bro
+         {{ owner_form.formset.as_p }}
+     
+        <input type="submit" class="btn btn-primary btn-lg" name="{{owner_form.bname}}" onclick="myf()" > 
+      </form>
+    <p> ^^^^^^^^^^^^^^</p><br>
+    {% endfor %}
+     
+    
+    </form>
+    <button type="button" onclick="myf1()">Click Me!</button>
+ </body>
+</html>

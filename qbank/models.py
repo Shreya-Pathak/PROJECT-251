@@ -5,13 +5,14 @@ class Qbank_Main(models.Model):
     Content = models.TextField()
     Difficulty = models.CharField(max_length = 6)
     Marks = models.IntegerField()
-    Answer = models.TextField(null = True, blank = True)
-    tags = models.TextField(default = "tags")
+    Answer = models.TextField(null = True, blank = True,default='')
+    tags = models.TextField(null=True , blank = True,default='')
     Chapter = models.TextField(default = "Chapter")
     Section = models.TextField(default = "Section")
     Owner = models.TextField()
     QbankNo = models.IntegerField()
     IsModule = models.BooleanField()
+    UploadNo = models.IntegerField(default=0)
 
 class Qbank_sub(models.Model):
 	Parent = models.ForeignKey(Qbank_Main, on_delete=models.CASCADE)

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+    <html>
+    <script type="text/javascript">
+    	function myf(){
+    		//alert('boo')
+    		window.location.href="{% url 'ltable' 'yell' %}"
+    		document.ff.submit();
+    	}
+    </script>
+    <!-- location.href={% url 'ltable' 'abc56' %} -->
+        <head>
+        	<!-- <form name="ff" method="POST">
+        		
+        	<select name="base" onChange="myf()"> name="sorter">
+        		<option>BC</option>
+        		<option>DEF3</option>
+        	</select></form> -->
+        	<form method="POST">
+        		{%csrf_token%}
+        	{{form.as_p}}
+        	<button type="submit" value="Submit">Sort</button></form>
+        	<p> {{cur}} </p>
+        </head>
+
+        </html>
