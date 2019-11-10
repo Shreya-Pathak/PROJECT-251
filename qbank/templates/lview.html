@@ -8,6 +8,7 @@
     		document.ff.submit();
     	}
     </script>
+    
         <head>
         	<form method="POST">
         		{%csrf_token%}
@@ -24,7 +25,15 @@
                 </tr>
                 {% for r in data %}
                 <tr>
-                    <td> {{r.Name}}</td>
+                    <td> 
+                        {% if r.Name|length > 20 %}
+                        {{r.Name|slice:"0:20"}} ...
+                    {% else %}
+                      
+                      {{r.Name}}
+                      
+                    {% endif %}
+                    </td>
                     <td> {{r.Marks | stringformat:"i"}}</td>
                     <td> {{r.Date}}</td>
                 </tr>

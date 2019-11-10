@@ -8,6 +8,13 @@
             document.ff.submit();
         }
     </script>
+    <style>
+       .ov{ white-space: nowrap;
+overflow: hidden;
+width: 180px;
+height: 30px;
+text-overflow: ellipsis; }
+    </style>
         <head>
             <form method="POST">
                 {%csrf_token%}
@@ -24,7 +31,15 @@
                 </tr>
                 {% for r in data %}
                 <tr>
-                    <td> {{r.Name}}</td>
+                    <td class="ov"> 
+                        {% if r.Name|length > 2 %}
+                        {{r.Name|slice:"0:15"}}
+                    {% else %}
+                      
+                      {{r.Name}}
+                      
+                    {% endif %}
+                    </td>
                     <td> {{r.Total_Marks}}</td>
                     <td> {{r.Date}}</td>
                 </tr>
