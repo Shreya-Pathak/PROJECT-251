@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import UploadFileForm, OwnerForm
+from .forms import UploadFileForm, OwnerForm,SorterForm
 #from .functions import handle_uploaded_file
 from utils.iniparser import iniparser
 import os
-from .models import Qbank_Main, Qbank_sub, Users
+from .models import Qbank_Main, Qbank_sub, Users,Qpaper
 from django.forms import inlineformset_factory
 
 def index(request):
@@ -144,6 +144,7 @@ def detail(request):
 	request.session['qu']=7
 	return render(request, 'detail.html', context)
 
+
 def edit(request):
     # obj_list = get_list_or_404(Qbank_Main, QbankNo = request.session['number'])
     obj_list = Qbank_Main.objects.filter(pk=request.session['qu'])
@@ -171,15 +172,15 @@ def edit(request):
                     if formset.is_valid():
                         created_author.save()
                         formset.save()
-                        return HttpResponseRedirect('/qbank/ep')
+                        return HttpResponseRedirect('/qbank/ed')
                     else:
                         created_author.save()
-                        return HttpResponseRedirect('/qbank/ep')
+                        return HttpResponseRedirect('/qbank/ed')
             else:
                 if author_form.is_valid() and ('b'+str(ct1)) in request.POST:
                     created_author = author_form.save(commit=False)
                     created_author.save()
-                    return HttpResponseRedirect('/qbank/ep')
+                    return HttpResponseRedirect('/qbank/ed')
             ct1=ct1+1
 
         #return HttpResponseRedirect('/qbank')
@@ -205,3 +206,29 @@ def edit(request):
     # context={'form':fs}
     return render(request,'edit_add.html',context)
 # Create your views here.
+
+def ltable(request,sel): #takes template from qbank/templates/lview
+    if request.method == 'POST':
+        form=SorterForm(request.POST)
+        if form.is_valid():
+            context={'cur':'init', 'form':form}
+            context['cur']=form.cleaned_data['sortfield'] #string of number
+            #print(context['cur'])
+            if context['cur']=='Name':
+                data=Qpaper.objects.all().order_by(context['cur'])
+            else:
+                data=Qpaper.objects.all().order_by('-'+context['cur'])
+            #print('buga')
+            #print(data)
+            context['data']=data
+            return render(request,'lview.html',context)   
+    else:
+        form=SorterForm()
+        #print('lol')
+        data=Qpaper.objects.all().order_by('Date')
+        #print(data)
+        context={'cur':'date', 'form':form,'data':data}
+        return render(request,'lview.html',context)
+
+
+

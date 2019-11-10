@@ -4,6 +4,8 @@ from django.forms import Textarea, TextInput
 from .models import Qbank_Main, Qbank_sub
 from django.forms import inlineformset_factory
 
+FRUIT_CHOICES=[('Date','Date'),('Name','Name'),('Marks','Marks')]
+
 class UploadFileForm(forms.Form):
     title = forms.CharField(max_length=50)
     file = forms.FileField()
@@ -19,5 +21,8 @@ class OwnerForm(forms.ModelForm):
             'Chapter': TextInput(attrs={'size': 50}),
             'Section': TextInput(attrs={'size': 50}),
         }
+
+class SorterForm(forms.Form):
+	sortfield= forms.CharField(label='Sort by', widget=forms.Select(choices=FRUIT_CHOICES))
 
 # PetNameFormSet = inlineformset_factory(Qbank_Main,Qbank_sub,fields=('Content',),can_delete=False, extra=0, form=OwnerForm)

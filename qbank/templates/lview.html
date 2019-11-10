@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
     <html>
     <script type="text/javascript">
@@ -7,19 +8,37 @@
     		document.ff.submit();
     	}
     </script>
-    <!-- location.href={% url 'ltable' 'abc56' %} -->
+    
         <head>
-        	<!-- <form name="ff" method="POST">
-        		
-        	<select name="base" onChange="myf()"> name="sorter">
-        		<option>BC</option>
-        		<option>DEF3</option>
-        	</select></form> -->
         	<form method="POST">
         		{%csrf_token%}
         	{{form.as_p}}
         	<button type="submit" value="Submit">Sort</button></form>
-        	<p> {{cur}} </p>
+        	<p> Sorted by: {{cur}} </p>
         </head>
-
+        <body>
+            <table cellpadding="10">
+                <tr>
+                    <th> Name </th>
+                    <th> Marks </th>
+                    <th> Date </th>
+                </tr>
+                {% for r in data %}
+                <tr>
+                    <td> 
+                        {% if r.Name|length > 20 %}
+                        {{r.Name|slice:"0:20"}} ...
+                    {% else %}
+                      
+                      {{r.Name}}
+                      
+                    {% endif %}
+                    </td>
+                    <td> {{r.Marks | stringformat:"i"}}</td>
+                    <td> {{r.Date}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+           
+        </body>
         </html>

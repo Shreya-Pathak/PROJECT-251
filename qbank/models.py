@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 #from django.contrib.postgres.fields import ArrayField
 
 class Qbank_Main(models.Model):
@@ -23,6 +24,12 @@ class Qbank_sub(models.Model):
 class Users(models.Model):
 	UserName = models.TextField()
 	Qbank = models.IntegerField()
+
+class Qpaper(models.Model):
+    Name= models.TextField()
+    Questions= models.TextField() #comma sep id values
+    Marks=models.IntegerField(default=0)
+    Date = models.DateField(default=datetime.date.today)
 
 
 

@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+    <html>
+    <script type="text/javascript">
+        function myf(){
+            //alert('boo')
+            window.location.href="{% url 'ltable' 'yell' %}"
+            document.ff.submit();
+        }
+    </script>
+    <style>
+       .ov{ white-space: nowrap;
+overflow: hidden;
+width: 180px;
+height: 30px;
+text-overflow: ellipsis; }
+    </style>
+        <head>
+            <form method="POST">
+                {%csrf_token%}
+            {{form.as_p}}
+            <button type="submit" value="Submit">Sort</button></form>
+            <p> {{cur}} </p>
+        </head>
+        <body>
+            <table>
+                <tr>
+                    <th> Name </th>
+                    <th> Marks </th>
+                    <th> Date </th>
+                </tr>
+                {% for r in data %}
+                <tr>
+                    <td class="ov"> 
+                        {% if r.Name|length > 2 %}
+                        {{r.Name|slice:"0:15"}}
+                    {% else %}
+                      
+                      {{r.Name}}
+                      
+                    {% endif %}
+                    </td>
+                    <td> {{r.Total_Marks}}</td>
+                    <td> {{r.Date}}</td>
+                </tr>
+                {% endfor%}
+            </table>
+           
+        </body>
+        </html>
