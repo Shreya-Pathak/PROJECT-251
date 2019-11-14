@@ -10,4 +10,10 @@ urlpatterns = [
     path('first/<str:sel>',views.ltable,name='ltable'),
 #    path('first/<str:sel>',views.ltable,name='ltable'),
     path('qpdet/<int:kid>',views.qpdet,name='qpdet')
+
+    path('det',views.detail,name='detail'),
+    path('ed',views.edit,name='edit'),
+   # path('first/<str:sel>',views.ltable,name='ltable')
+
+    #path('first/<str:sel>',views.ltable,name='ltable')
 ]

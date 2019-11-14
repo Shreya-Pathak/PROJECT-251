@@ -1,0 +1,37 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<script type="text/javascript">
+      function myf1(){
+        //alert('boo')
+        window.location.href='ed'
+        
+      }
+    </script>
+
+  <h3>Question</h3>
+
+  <p><strong>Content:</strong> {{ content }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>Answer:</strong> {{ Answer }}</p>
+  <p><strong>Difficulty:</strong> {{ diff }}</p> 
+  <p><strong>Tags:</strong> {{ tags }}</p>  
+  <p><strong>Chapter:</strong> {{ chap }}</p>
+  <p><strong>Section:</strong> {{ sec }}</p>
+  {% if ism %}
+  	<h3>Subquestions</h3>
+  	{% for q in kid %}
+
+  	  <p><strong>Content:</strong> {{ q.con }}</a></p> <!-- author detail link not yet defined -->
+  	  <p><strong>Answer:</strong> {{ q.ans }}</p>
+  	  <p><strong>Marks:</strong> {{ q.mar }}</p> 
+  	  <br>
+  	  {% endfor %}
+  	  {% endif %}
+<button type="button" onclick="myf1()">Edit</button>
+  	  {% endblock %}
+
+  	  {% block sidebar %}
+        <ul class="sidebar-nav">
+          <li><a href='home/'>Home</a></li>
+          <li>Owner: {{ owner }}</li>
+        </ul>
+     {% endblock %}

@@ -1,5 +1,20 @@
+
 <!DOCTYPE HTML>
 <html>
+<head > 
+  
+    <title>Basic Form</title> 
+      
+    <meta charset="utf-8" /> 
+      
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+  
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"> 
+</script> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> 
+</script> 
+</head> 
 <script type="text/javascript">
   function myf(){
     alert('Question submitted');
@@ -8,29 +23,41 @@
 <script type="text/javascript">
       function myf1(){
         //alert('boo')
-        window.location.href="{% url 'home'%}"
+        window.location.href='home/'
         
       }
     </script>
-<body>
-  
+
+  <body  style=" text-align: left; background-color: #f5f7f8 !important;"> 
+    <div class="container"> 
+    <div class="row"> 
+        <div class="col-md-8 col-md-offset-2"> 
+         <h1>Edit Questions before Adding</h1>
    {% for owner_form in owner_forms %}
-   hiyooo22
    
-    
+    <h2>Question {{ owner_form.Qno }}<br></h2>
       <form class="petname_form" method="post">{% csrf_token %}   
-         yoyo
+         
          {{ owner_form.author_form.as_p }}
-         bro bro
+         {% if owner_form.isMod %}
+         <h2>Subquestions: <br></h2>
          {{ owner_form.formset.as_p }}
-     
-        <input type="submit" class="btn btn-primary btn-lg" name="{{owner_form.bname}}" onclick="myf()" > 
+         {% endif %}
+      <div class="form-group"> 
+        <input type="submit" class="form-group" name="{{owner_form.bname}}" onclick="myf()" > 
+       </div>
       </form>
-    <p> ^^^^^^^^^^^^^^</p><br>
+    
     {% endfor %}
      
     
     </form>
-    <button type="button" onclick="myf1()">Click Me!</button>
+     <div class="form-group"> 
+    <button type="button" onclick="myf1()">Submit</button>
+  </div>
+</div>
+
+</div>
+</div>
  </body>
 </html>
