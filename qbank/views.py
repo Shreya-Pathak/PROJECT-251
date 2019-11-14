@@ -254,6 +254,16 @@ def cvhelp(request,no):
     request.session['number']=b[0].pk
     return HttpResponseRedirect('/qbank/ep')
 
+def qpdet(request,kid): 
+    one_entry = Qpaper.objects.filter(id=kid)
+    title=one_entry.values_list('Name',flat=True)
+    ques=list(one_entry.values_list('Questions',flat=True))
+    ques=ques[0].split(",")
+    #print(list(ques))
+    ques=[int(x) for x in ques]
+    context={'data':Qbank_Main.objects.filter(pk__in=ques),'title':title[0]}
+    #print(context)
+    return render(request,'qppage.html',context)
 
 
 
