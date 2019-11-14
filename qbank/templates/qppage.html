@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
     <html>
     <script type="text/javascript">
@@ -7,34 +8,31 @@
     		document.ff.submit();
     	}
     </script>
-    
-        <head>
-        	<form method="POST">
-        		{%csrf_token%}
-        	{{form.as_p}}
-        	<button type="submit" value="Submit">Sort</button></form>
-        	<p> Sorted by: {{cur}} </p>
-        </head>
+    <h1>
+        {{title}}
+    </h1>
         <body>
             <table cellpadding="10">
                 <tr>
-                    <th> Name </th>
+                    <th> Content </th>
                     <th> Marks </th>
-                    <th> Date </th>
+                    <th> Chapter </th>
+                    <th> Section </th>
                 </tr>
                 {% for r in data %}
                 <tr>
-                    <td><a href="{% url 'qpdet' r.id %}">
-                        {% if r.Name|length > 20 %}
-                        {{r.Name|slice:"0:20"}} ...
+                    <td> 
+                        {% if r.Content|length > 20 %}
+                        {{r.Content|slice:"0:20"}}...
                     {% else %}
                       
-                      {{r.Name}}
+                      {{r.Content}}
                       
-                    {% endif %}</a>
+                    {% endif %}
                     </td>
                     <td> {{r.Marks | stringformat:"i"}}</td>
-                    <td> {{r.Date}}</td>
+                    <td> {{r.Chapter}}</td>
+                    <td> {{r.Section}}</td>
                 </tr>
                 {% endfor %}
             </table>
