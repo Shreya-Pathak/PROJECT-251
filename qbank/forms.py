@@ -13,7 +13,7 @@ class UploadFileForm(forms.Form):
 class OwnerForm(forms.ModelForm):
     class Meta:
        model = Qbank_Main
-       fields=('Content','Difficulty','Marks','Answer','tags','Chapter','Section','QbankNo')
+       fields=('Content','Difficulty','Marks','Answer','tags','Chapter','Section')
        widgets = {
             'Content': Textarea(attrs={'cols': 70, 'rows': 5}),
             'Answer': Textarea(attrs={'cols': 70, 'rows': 5}),

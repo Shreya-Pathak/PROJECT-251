@@ -4,7 +4,7 @@ from .forms import UploadFileForm, OwnerForm,SorterForm
 #from .functions import handle_uploaded_file
 from utils.iniparser import iniparser
 import os
-from .models import Qbank_Main, Qbank_sub, Users,Qpaper
+from .models import Qbank_Main, Qbank_sub, Users,Qpaper,Qbank
 from django.forms import inlineformset_factory
 
 def index(request):
@@ -22,6 +22,7 @@ def upload_file(request):
             #print(contents)
             print(iniparser(f.name))
             request.session['main_list'] = iniparser(f.name)
+            request.session['qbank'] = form.cleaned_data['title']
             os.remove(f.name)
             #print(request.session['main_list'])
             return HttpResponseRedirect('/qbank/a')
@@ -40,6 +41,13 @@ def add(request):
     if len(upload)==0:
         upload=[0]
     print(max(qbno_data)+1)
+    username = request.user.username
+    b=Qbank()
+    b.Name=request.session['qbank']
+    b.Priv="edit"
+    b.Owner=username
+    b.No=max(qbno_data)+1
+    b.save()
     #main_list = [{'user': 'dummy', 'qbankno': 1, 'content': 'first question feels', 'difficulty': 'Easy', 'tags': 'some,here,jjjj,kioo', 'chapter': 'buga', 'section': 'nuga', 'answer': None, 'part_1': 'first', 'part_2': 'jkkkkk', 'isModule': True, 'number_of_parts': 2, 'answer_1': 'lleell', 'answer_2': None, 'marks_1': 45, 'marks_2': 21, 'marks': 0}, {'user': 'dummy', 'qbankno': 2, 'content': 'first question feels', 'difficulty': 'easy', 'tags': 'some,here,jjjj,kioo', 'chapter': 'buga', 'section': 'nuga', 'answer': 'jiyooooo', 'part_1': 'first', 'part_2': 'jkkkkk', 'isModule': True, 'number_of_parts': 2, 'answer_1': 'loooooo', 'answer_2': None, 'marks_1': 45, 'marks_2': 66, 'marks': 0}]
     for x in main_list:
         print(x)
@@ -54,9 +62,9 @@ def add(request):
         q.Section = x['section']
         q.IsModule = x['isModule']
         q.Owner = x['user']
-        q.QbankNo = max(qbno_data)+1
+        q.QbankNo = b
         q.UploadNo = max(upload)+1
-        request.session['number'] = q.UploadNo
+        request.session['number'] = b.pk
         q.save()
         if(ism):
         	for i in range(x['number_of_parts']):
@@ -71,7 +79,8 @@ def add(request):
 
 def eform(request):
     # obj_list = get_list_or_404(Qbank_Main, QbankNo = request.session['number'])
-    obj_list = Qbank_Main.objects.filter(UploadNo=request.session['number'])
+    b=Qbank.objects.get(pk=request.session['number'])
+    obj_list = Qbank_Main.objects.filter(QbankNo=b)
     #obj_list = Qbank_Main.objects.filter(QbankNo=2)
 
     owner_forms = []
@@ -131,7 +140,7 @@ def eform(request):
     return render(request,'edit_add.html',context)
 
 def detail(request):
-	qu = Qbank_Main.objects.get(pk=7);
+	qu = Qbank_Main.objects.get(pk=1);
 	kids = Qbank_sub.objects.filter(Parent = qu);
 	kidf=[]
 	i=0
@@ -141,7 +150,7 @@ def detail(request):
 		kidf.append(kid)
 	context = {'owner':qu.Owner, 'content':qu.Content, 'diff':qu.Difficulty, 'Answer': qu.Answer, 'tags':qu.tags, 'chap':qu.Chapter, 
 	'sec': qu.Section, 'kid':kidf, 'ism':qu.IsModule}
-	request.session['qu']=7
+	request.session['qu']=1
 	return render(request, 'detail.html', context)
 
 
@@ -229,6 +238,24 @@ def ltable(request,sel): #takes template from qbank/templates/lview
         #print(data)
         context={'cur':'date', 'form':form,'data':data}
         return render(request,'lview.html',context)
+
+def cardv(request):
+    obj_list=Qbank.objects.all()
+    qbank=[]
+    for b in obj_list:
+        print(b.Name)
+        di={'name':b.Name,'priv':b.Priv,'owner':b.Owner, 'id':b.No}
+        qbank.append(di)
+    context={'qbank':qbank}
+    return render(request,'cardv.html',context)
+
+def cvhelp(request,no):
+    b=Qbank.objects.filter(No=no)
+    request.session['number']=b[0].pk
+    return HttpResponseRedirect('/qbank/ep')
+
+
+
 
 
 

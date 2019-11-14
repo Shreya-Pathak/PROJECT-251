@@ -2,6 +2,12 @@ from django.db import models
 import datetime
 #from django.contrib.postgres.fields import ArrayField
 
+class Qbank(models.Model):
+    Name=models.TextField()
+    Priv=models.TextField()
+    Owner=models.TextField()
+    No = models.IntegerField()
+
 class Qbank_Main(models.Model):
     Content = models.TextField()
     Difficulty = models.CharField(max_length = 6)
@@ -11,7 +17,7 @@ class Qbank_Main(models.Model):
     Chapter = models.TextField(default = "Chapter")
     Section = models.TextField(default = "Section")
     Owner = models.TextField()
-    QbankNo = models.IntegerField()
+    QbankNo = models.ForeignKey(Qbank, on_delete=models.CASCADE)
     IsModule = models.BooleanField()
     UploadNo = models.IntegerField(default=0)
 
@@ -30,7 +36,6 @@ class Qpaper(models.Model):
     Questions= models.TextField() #comma sep id values
     Marks=models.IntegerField(default=0)
     Date = models.DateField(default=datetime.date.today)
-
 
 
 # Create your models here.

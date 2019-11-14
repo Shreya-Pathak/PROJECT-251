@@ -1,0 +1,57 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script type="text/javascript" >
+ $( document ).ready(function() {
+  $('.card').on('contextmenu', function(e) {
+  var top = e.pageY -100 ;
+  var left = e.pageX - 220;
+  $("#context-menu").css({
+    display: "block",
+    top: top,
+    left: left
+  }).addClass("show");
+  return false; //blocks default Webbrowser right click menu
+}).on("click", function() {
+  $("#context-menu").removeClass("show").hide();
+});
+});
+ $(function(){
+$("#context-menu a").on("click", function() {
+  $(this).parent().removeClass("show").hide();
+});
+});
+
+</script>
+
+<h2>Question Banks</h2><br>
+{% for bank in qbank %}
+
+<div class="card" >
+  <div class="card-header">
+    {{ bank.name }}
+  </div>
+  <div class="card-body">
+    <blockquote class="blockquote mb-0">
+      <p>Privileges: {{ bank.priv }}</p>
+      <div class="dropdown-menu dropdown-menu-sm" id="context-menu">
+          <a class="dropdown-item" href="{% url 'cvhelp' bank.id %}">Edit</a>
+          <a class="dropdown-item" href="#">Delete</a>
+          <a class="dropdown-item" href="#">Share</a>
+        </div>
+      <footer>Creator: {{ bank.owner }}</footer>
+    </blockquote>
+  </div>
+</div>
+<br>
+{% endfor %}
+{% endblock %}
+
+  	  {% block sidebar %}
+        <ul class="sidebar-nav">
+          <li><a href='home/'>Home</a></li>
+          </ul>
+     {% endblock %}

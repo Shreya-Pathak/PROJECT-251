@@ -7,9 +7,9 @@
         <body>
             <center>
                 <div class="jumbotron">
-                    <h1 class="display-4">Ini file upload</h1>
+                    <h2 class="display-4">Ini file upload</h2>
                             {% block replace %}
-                    <p class="lead">To make a user profile and upload the files fill this form</p>
+                    <p class="lead">Upload ini file and specify the title</p>
                     <hr class="my-4">
                     <form method="POST" enctype="multipart/form-data">
                         <!-- Very Important csrf Token -->
@@ -17,14 +17,10 @@
                         <table>
                             {{ form.as_table }}
                         </table>
+                        <br>
                         <input type="submit" class="btn btn-primary btn-lg" name="register" onclick="document.upload.submit()">
                 </div>
-                <select id="org" name="org_list" onChange="redirectUrl()">
-  <option  value="" selected="selected">---SELECT---</option>
-  {% for org in organisation %}
-   <option value="{{org.id}}">{{org.name|capfirst}}</option>
-  {% endfor %}
-</select>
+               
             </center>
             {% endblock %}
         </body>
