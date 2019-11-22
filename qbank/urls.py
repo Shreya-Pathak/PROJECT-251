@@ -13,7 +13,7 @@ urlpatterns = [
     path('det',views.detail,name='detail'),
     path('ed',views.edit,name='edit'),
    # path('first/<str:sel>',views.ltable,name='ltable')
-    path('cvhelp/<int:no>',views.cvhelp, name='cvhelp'),
+    path('cvhelp/<str:no>',views.cvhelp, name='cvhelp'),
     path('cv',views.cardv, name='cv'),
 
     #path('first/<str:sel>',views.ltable,name='ltable')

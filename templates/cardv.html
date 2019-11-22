@@ -7,8 +7,14 @@
 <script type="text/javascript" >
  $( document ).ready(function() {
   $('.card').on('contextmenu', function(e) {
-  var top = e.pageY -100 ;
-  var left = e.pageX - 220;
+     var text =  $(e.target)[0].id ; //$((e.target).attr("id"));
+     var tg = "{% url 'cvhelp' 12345 %}".replace(/12345/, text);
+  var top = e.pageY - 150  ;
+  var left = e.pageX  - 200 ;
+  //window.location.href=tg;
+  //text = parseInt(text);
+  $('#edf').attr("href", tg); 
+  //alert(tg);
   $("#context-menu").css({
     display: "block",
     top: top,
@@ -30,19 +36,19 @@ $("#context-menu a").on("click", function() {
 <h2>Question Banks</h2><br>
 {% for bank in qbank %}
 
-<div class="card" >
-  <div class="card-header">
+<div class="card" id="{{bank.id}}" >
+  <div class="card-header" id="{{bank.id}}">
     {{ bank.name }}
   </div>
-  <div class="card-body">
-    <blockquote class="blockquote mb-0">
-      <p>Privileges: {{ bank.priv }}</p>
+  <div class="card-body" id="{{bank.id}}">
+    <blockquote class="blockquote mb-0" id="{{bank.id}}">
+      <p id="{{bank.id}}">Privileges: {{ bank.priv }}</p>
       <div class="dropdown-menu dropdown-menu-sm" id="context-menu">
-          <a class="dropdown-item" href="{% url 'cvhelp' bank.id %}">Edit</a>
+          <a id="edf" class="dropdown-item" href="#">Edit</a>
           <a class="dropdown-item" href="#">Delete</a>
           <a class="dropdown-item" href="#">Share</a>
         </div>
-      <footer>Creator: {{ bank.owner }}</footer>
+      <footer id="{{bank.id}}">Creator: {{ bank.owner }}</footer>
     </blockquote>
   </div>
 </div>

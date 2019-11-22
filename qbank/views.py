@@ -250,6 +250,7 @@ def cardv(request):
     return render(request,'cardv.html',context)
 
 def cvhelp(request,no):
+    no=int(no)
     b=Qbank.objects.filter(No=no)
     request.session['number']=b[0].pk
     return HttpResponseRedirect('/qbank/ep')
