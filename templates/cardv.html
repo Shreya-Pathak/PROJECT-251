@@ -57,7 +57,15 @@ $("#context-menu a").on("click", function() {
 {% endblock %}
 
   	  {% block sidebar %}
-        <ul class="sidebar-nav">
-          <li><a href='home/'>Home</a></li>
+ <ul class="sidebar-nav">
+          <li><a href="{% url 'cv'%}">Question Banks</a>
+            <ul>
+                <li><a href="{% url 'ini' %}"> Upload Question Bank</a></li>
+            </ul>
+          </li>
+          <li><a href="{% url 'ltable'%}">Question Papers</a></li>
+           <ul>
+                <li><a href="{% url 'choose_frqp' %}"> Add Question Paper</a></li>
+            </ul>
           </ul>
      {% endblock %}

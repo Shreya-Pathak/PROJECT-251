@@ -1,6 +1,5 @@
 {% extends "base_generic.html" %}
 {% block content %}
-
     <script type="text/javascript">
     	function myf(){
     		//alert('boo')
@@ -8,37 +7,59 @@
     		document.ff.submit();
     	}
     </script>
-    <h1>
-        {{title}}
-    </h1>
+        <h2> Make a Question Paper</h2>
+        <br>
+        <table cellpadding="4">
+            <tr>
+                <td colspan="2">
+                    <form method="POST"><p>
+                        {%csrf_token%}
+            Name of paper : <input type="text" name="name_of_paper" />
+            
+            Total Marks : <input type="text" name="marks" /></p>
+            
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
         
             <table cellpadding="10">
                 <tr>
-                    <th> Content 22 </th>
+                    <th></th>
+                    <th> Name </th>
                     <th> Marks </th>
                     <th> Chapter </th>
-                    <th> Section </th>
                 </tr>
                 {% for r in data %}
                 <tr>
-                    <td> 
+                    <td><input type="checkbox" name="checks" value="{{r.id}}" /></td>
+                    <td><a href="{% url 'qpdet' r.id %}">
                         {% if r.Content|length > 20 %}
-                        {{r.Content|slice:"0:20"}}...
+                        {{r.Content|slice:"0:20"}} ...
                     {% else %}
                       
                       {{r.Content}}
                       
-                    {% endif %}
+                    {% endif %}</a>
                     </td>
                     <td> {{r.Marks | stringformat:"i"}}</td>
                     <td> {{r.Chapter}}</td>
-                    <td> {{r.Section}}</td>
                 </tr>
                 {% endfor %}
             </table>
-           
-       {% endblock %}
-       {% block sidebar %}
+           <center><button type="submit" value="Submit" name="maker">Make Qpaper</button></center></form>
+       </td>
+       <td align="center">
+        <form method="POST">
+                {%csrf_token%}
+            {{form.as_p}}
+            <center><button type="submit" value="Submit" name="sfilt">Refine</button></center></form>
+            <p> Sorted by: {{cur}} </p>
+       </td>
+   </tr>
+</table>
+         {% endblock %}
+         {% block sidebar %}
  <ul class="sidebar-nav">
           <li><a href="{% url 'cv'%}">Question Banks</a>
             <ul>

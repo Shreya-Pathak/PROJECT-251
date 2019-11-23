@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import UploadFileForm, OwnerForm,SorterForm
+from .forms import UploadFileForm, OwnerForm,SorterForm,SorterForm2,MakerForm
 #from .functions import handle_uploaded_file
 from utils.iniparser import iniparser
 import os
@@ -216,13 +216,14 @@ def edit(request):
     return render(request,'edit_add.html',context)
 # Create your views here.
 
-def ltable(request,sel): #takes template from qbank/templates/lview
+def ltable(request): #takes template from qbank/templates/lview
     if request.method == 'POST':
         form=SorterForm(request.POST)
         if form.is_valid():
             context={'cur':'init', 'form':form}
             context['cur']=form.cleaned_data['sortfield'] #string of number
-            #print(context['cur'])
+            #rtags=form.cleaned_data['tags']
+            #print(context['cur'])    
             if context['cur']=='Name':
                 data=Qpaper.objects.all().order_by(context['cur'])
             else:
@@ -266,7 +267,57 @@ def qpdet(request,kid):
     #print(context)
     return render(request,'qppage.html',context)
 
-
-
-
+def make_qp(request):
+    if request.method == 'POST':
+        form=SorterForm2(request.POST)
+        form_make=MakerForm(request.POST)
+        context={'cur':'Content', 'form':form,'data':Qbank_Main.objects.all().order_by('Content'),'cform':form_make}
+        if form.is_valid() and 'sfilt' in request.POST:
+            context['cur']=form.cleaned_data['sortfield'] #string of number
+            at=form.cleaned_data['tags']
+            print(at)
+            #print(context['cur'])
+            if len(at)==0:
+                if context['cur']=='Content':
+                    data=Qbank_Main.objects.all().order_by(context['cur'])
+                else:
+                    data=Qbank_Main.objects.all().order_by('-'+context['cur'])
+            else:
+                at=at.split(",")
+                at=[(x.strip()).lower() for x in at if not x]
+                ns="|".join(at)
+                exp=r','+ns+',|'+ns+',|'+','+ns
+                print(exp)
+                if context['cur']=='Name':
+                    data=Qbank_Main.objects.all().filter(tags__iregex=exp).order_by(context['cur'])
+                    print(data[0].Name)
+                else:
+                    data=Qbank_Main.objects.all().filter(tags__iregex=exp).order_by('-'+context['cur'])
+            print('buga')
+            print(data)
+            context['data']=data
+        if form_make.is_valid() and 'maker' in request.POST:
+            sv = request.POST.getlist('checks')
+            nop=request.POST.get('name_of_paper')
+            marks=request.POST.get('marks')
+            #print('loooo')
+            #r=form_make.cleaned_data['choices']
+            # print(nop)
+            # print(sv)
+            if not(len(sv)==0) and not(len(nop)==0):
+                q=Qpaper()
+                q.Name=nop
+                q.Questions=",".join(sv)
+                q.Marks=int(marks)
+                q.save()
+                return  HttpResponseRedirect('/qbank/first')
+        return render(request,'choose_frqp.html',context)
+    else:
+        form=SorterForm2()
+        form_make=MakerForm()
+        #print('lol')
+        data=Qbank_Main.objects.all().order_by('Content')
+        #print(data)
+        context={'cur':'Content', 'form':form,'data':data,'cform':form_make}
+        return render(request,'choose_frqp.html',context)
 

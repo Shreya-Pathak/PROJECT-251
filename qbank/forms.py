@@ -5,6 +5,7 @@ from .models import Qbank_Main, Qbank_sub
 from django.forms import inlineformset_factory
 
 FRUIT_CHOICES=[('Date','Date'),('Name','Name'),('Marks','Marks')]
+FRUIT_CHOICES2=[('Content','Content'),('Marks','Marks')]
 
 class UploadFileForm(forms.Form):
     title = forms.CharField(max_length=50)
@@ -23,6 +24,15 @@ class OwnerForm(forms.ModelForm):
         }
 
 class SorterForm(forms.Form):
-	sortfield= forms.CharField(label='Sort by', widget=forms.Select(choices=FRUIT_CHOICES))
+  sortfield= forms.CharField(label='Sort by', widget=forms.Select(choices=FRUIT_CHOICES),required=False)
+  #tags=forms.CharField(required=False)
 
+class SorterForm2(forms.Form):
+  sortfield= forms.CharField(label='Sort by', widget=forms.Select(choices=FRUIT_CHOICES2),required=False)
+  tags=forms.CharField(required=False)
 # PetNameFormSet = inlineformset_factory(Qbank_Main,Qbank_sub,fields=('Content',),can_delete=False, extra=0, form=OwnerForm)
+
+class MakerForm(forms.Form):
+    name_of_paper=forms.CharField(max_length=50,required=False)
+    marks=forms.IntegerField(required=False)
+    choices = forms.BooleanField(required=False)

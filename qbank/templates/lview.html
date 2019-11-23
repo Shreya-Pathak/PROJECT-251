@@ -3,11 +3,11 @@
     <script type="text/javascript">
     	function myf(){
     		//alert('boo')
-    		window.location.href="{% url 'ltable' 'yell' %}"
+    		window.location.href="{% url 'ltable' %}"
     		document.ff.submit();
     	}
     </script>
-    
+    <h2>Question Banks</h2>
         <head>
         	<form method="POST">
         		{%csrf_token%}
@@ -16,15 +16,16 @@
         	<p> Sorted by: {{cur}} </p>
         </head>
         <body>
+            
             <table cellpadding="10">
                 <tr>
-                    <th> Name </th>
+                    <th> Name22 </th>
                     <th> Marks </th>
                     <th> Date </th>
                 </tr>
                 {% for r in data %}
-                <tr>
-                    <td><a href="{% url 'qpdet' r.id %}">
+                <tr align="center">
+                    <td align="center"><a href="{% url 'qpdet' r.id %}">
                         {% if r.Name|length > 20 %}
                         {{r.Name|slice:"0:20"}} ...
                     {% else %}

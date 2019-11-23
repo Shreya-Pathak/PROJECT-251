@@ -1,0 +1,73 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+    <script type="text/javascript">
+    	function myf(){
+    		//alert('boo')
+    		window.location.href="{% url 'ltable' %}"
+    		document.ff.submit();
+    	}
+    </script>
+    <style>
+        .trt{
+            float: right;
+        }
+        .trl{
+            float: left;
+        }
+    </style>
+    <h2>Question Papers</h2>
+            <table cellpadding="20">
+                <tr>
+                    <td>
+            <table cellpadding="10" class="trl">
+                <tr>
+                    <th><center> Name</center> </th>
+                    <th> <center>Marks</center> </th>
+                    <th> <center>Date </center></th>
+                </tr>
+                {% for r in data %}
+                <tr>
+                    <td><center><a href="{% url 'qpdet' r.id %}">
+                        {% if r.Name|length > 20 %}
+                        {{r.Name|slice:"0:20"}} ...
+                    {% else %}
+                      
+                      {{r.Name}}
+                      
+                    {% endif %}</a></center>
+                    </td>
+                    <td> <center>{{r.Marks | stringformat:"i"}}</center></td>
+                    <td> {{r.Date}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+        <td>
+            <div ><center>
+            <form method="POST">
+                {%csrf_token%}
+            {{form.as_p}}
+            <button type="submit" value="Submit">Sort</button></form>
+            <p> Sorted by: {{cur}} </p>
+        </center>
+        </div>
+        </td>
+        </tr>
+        </table>
+        {% endblock %}
+
+              {% block sidebar %}
+        <ul class="sidebar-nav">
+          <li><a href="{% url 'cv'%}">Question Banks</a>
+            <ul>
+                <li><a href="{% url 'ini' %}"> Upload Question Bank</a></li>
+            </ul>
+          </li>
+          <li><a href="{% url 'ltable'%}">Question Papers</a></li>
+           <ul>
+                <li><a href="{% url 'choose_frqp' %}"> Add Question Paper</a></li>
+            </ul>
+          </ul>
+     {% endblock %}
+       
