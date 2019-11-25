@@ -11,7 +11,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 
 @login_required
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'cardv.html')
 
 # class Profile(models.Model):
 
@@ -170,7 +170,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            return redirect('cv')
     else:
         form = UserCreateForm()
     return render(request, 'signup.html', {'form': form})
@@ -201,6 +201,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 #from django.shortcuts import render, redirect
 
+@login_required(login_url='login')
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -208,7 +209,7 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('change_password')
+            return redirect('cv')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -217,6 +218,7 @@ def change_password(request):
         'form': form
     })
 
+@login_required(login_url='login')
 def change_email(request):
     if request.method == 'POST':
         form = EmailChangeForm(request.user, request.POST)
@@ -224,7 +226,7 @@ def change_email(request):
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your email was successfully updated!')
-            return redirect('home')
+            return redirect('cv')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
