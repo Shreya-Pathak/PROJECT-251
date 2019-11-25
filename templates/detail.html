@@ -1,9 +1,19 @@
 {% extends "base_generic.html" %}
 {% block content %}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
 <script type="text/javascript">
       function myf1(){
         //alert('boo')
-        window.location.href='ed'
+        window.location.href="{% url 'edit' %}"
         
       }
     </script>
@@ -31,7 +41,22 @@
 
   	  {% block sidebar %}
         <ul class="sidebar-nav">
-          <li><a href='home/'>Home</a></li>
-          <li>Owner: {{ owner }}</li>
+          <li style="list-style-type: none;"><h3>Hi {{user.username}}</h3></li>
+          <li><a href="{% url 'cv'%}">Question Banks</a>
+            <ul>
+                <li><a href="{% url 'ini' %}"> Upload Question Bank</a></li>
+            </ul>
+          </li>
+          <li><a href="{% url 'ltable'%}">Question Papers</a></li>
+           <ul>
+                <li><a href="{% url 'choose_frqp' %}"> Add Question Paper</a></li>
+            </ul>
+           <li><a href="{% url 'lv' %}"> All Questions</a></li>
+
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        
+        <li><a href="{% url 'change_password' %}">Change Password</a></li>
+        
+        <li><a href="{% url 'change_email'%}">Change Email</a></li>
         </ul>
      {% endblock %}

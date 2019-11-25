@@ -1,43 +1,23 @@
 {% extends "base_generic.html" %}
-{% load crispy_forms_tags %}
 {% block content %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript">
-        function myf(){
-            //alert('boo')
-            window.location.href="{% url 'ltable' %}"
-            document.ff.submit();
-        }
-        $(document).ready(function(){
+<script type="text/javascript">
+   $(document).ready(function(){
     $(".r").click(function(){
         window.location = $(this).attr('href');
         return false;
     });
 });
-    </script>
-    <style>
+</script>
+<style>
      .r {
     cursor: pointer;
 }
 
 .r:hover {background-color:#f5f5f5;}
-button {
-  background-color: #555555;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 12px;
-}
-</style>
-
-    <h1>
+    </style>
+<h1>
         {{title}}
     </h1>
         
@@ -47,36 +27,31 @@ button {
                     <th> Marks </th>
                     <th> Chapter </th>
                     <th> Section </th>
+                    <th>Difficulty</th>
                 </tr>
                 {% for r in data %}
-                <tr class="r" href="{% url 'detail' r.pk %}">
-                    <td> 
-                        {% if r.Content|length > 20 %}
-                        {{r.Content|slice:"0:20"}}...
+                <tr class="r" href="{% url 'detail' r.id %}">
+                    <td>
+                        {% if r.con|length > 20 %}
+                        {{r.con|slice:"0:20"}}...
                     {% else %}
                       
-                      {{r.Content}}
+                      {{r.con}}
                       
                     {% endif %}
-                
                     </td>
-                    <td> {{r.nmarks | stringformat:"i"}}</td>
-                    <td> {{r.Chapter}}</td>
+                    <td> {{r.mar | stringformat:"i"}}</td>
+                    <td> {{r.chap}}</td>
                     <td> {{r.Section}}</td>
+                    <td> {{r.diff}}</td>
                 </tr>
                 {% endfor %}
             </table>
-           <form method="post">
-                {% csrf_token %}
-                {{hf |crispy}}
-               
-           <input type="submit" class="button">
-       </form>
-
-
+           
        {% endblock %}
        {% block sidebar %}
  <ul class="sidebar-nav">
+          <ul class="sidebar-nav">
           <li style="list-style-type: none;"><h3>Hi {{user.username}}</h3></li>
           <li><a href="{% url 'cv'%}">Question Banks</a>
             <ul>

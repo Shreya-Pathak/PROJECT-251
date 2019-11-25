@@ -1,26 +1,38 @@
+{% extends "base_generic.html" %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}Question Bank{% endblock %}</title>
+    
   </head>
   <body>
     <header>
       <h1>Question Bank : Hack Exchange</h1>
-      {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}">logout</a>
-        <br>
-        <a href="password/">change password</a>
-        <br>
-        <a href="email/">change email</a>
-      {% else %}
-        <a href="{% url 'login' %}">login</a> / <a href="{% url 'signup' %}">signup</a>
-      {% endif %}
-      <hr>
+      
     </header>
     <main>
       {% block content %}
-      {% endblock %}
+      {% endblock %}      
     </main>
   </body>
+  {% block sidebar %}
+ <ul class="sidebar-nav">
+          
+      {% if user.is_authenticated %}
+        <h3>{{user.username}}</h3>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        
+        <li><a href="password/">Change Password</a></li>
+        
+        <li><a href="email/">Change Email</a></li>
+      {% else %}
+      <h3>Question Bank : <br>Hack Exchange</h3>
+        <li><a href="{% url 'login' %}">Login</a></li><li>  <a href="{% url 'signup' %}">Signup</a></li>
+      
+      {% endif %}
+      
+    </header>
+     {% endblock %}
 </html>
+

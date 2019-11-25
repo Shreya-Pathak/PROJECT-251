@@ -1,4 +1,5 @@
 {% extends "base_generic.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -9,11 +10,15 @@
   $('.card').on('contextmenu', function(e) {
      var text =  $(e.target)[0].id ; //$((e.target).attr("id"));
      var tg = "{% url 'cvhelp' 12345 %}".replace(/12345/, text);
+     var td = "{% url 'delhelp' 12345 %}".replace(/12345/, text);
+     var ti = "{% url 'ctoini' 12345 %}".replace(/12345/, text);
   var top = e.pageY - 150  ;
   var left = e.pageX  - 200 ;
   //window.location.href=tg;
   //text = parseInt(text);
-  $('#edf').attr("href", tg); 
+  $('#edf').attr("href", tg);
+  $('#del').attr("href", td);
+  $('#ini').attr("href", ti); 
   //alert(tg);
   $("#context-menu").css({
     display: "block",
@@ -32,11 +37,21 @@ $("#context-menu a").on("click", function() {
 });
 
 </script>
+<script type="text/javascript">
+  function myf1(ele){
+        //alert('boo')
+        var i = ele.getAttribute('id')
 
+        window.location.href="{% url 'qlist' 12 %}".replace(/12/,i);
+        
+      }
+</script>
 <h2>Question Banks</h2><br>
+<table cellpadding="10">
+  <td width="70%">
 {% for bank in qbank %}
 
-<div class="card" id="{{bank.id}}" >
+<div class="card" id="{{bank.id}}" ondblclick='myf1(this)' >
   <div class="card-header" id="{{bank.id}}">
     {{ bank.name }}
   </div>
@@ -45,8 +60,8 @@ $("#context-menu a").on("click", function() {
       <p id="{{bank.id}}">Privileges: {{ bank.priv }}</p>
       <div class="dropdown-menu dropdown-menu-sm" id="context-menu">
           <a id="edf" class="dropdown-item" href="#">Edit</a>
-          <a class="dropdown-item" href="#">Delete</a>
-          <a class="dropdown-item" href="#">Share</a>
+          <a id="del" class="dropdown-item" href="#">Delete</a>
+          <a id="ini" class="dropdown-item" href="#">Download</a>
         </div>
       <footer id="{{bank.id}}">Creator: {{ bank.owner }}</footer>
     </blockquote>
@@ -54,10 +69,25 @@ $("#context-menu a").on("click", function() {
 </div>
 <br>
 {% endfor %}
+</td>
+<td valign="top">
+  <center>
+<div>
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="Submit">
+</form>
+  </div>
+  </center>
+</td>
+</table>
 {% endblock %}
 
   	  {% block sidebar %}
  <ul class="sidebar-nav">
+          <li style="list-style-type: none;"><h3>Hi {{user.username}}</h3></li>
+          <li style="list-style-type: none;"><h5>{{user.email}}</h5></li>
           <li><a href="{% url 'cv'%}">Question Banks</a>
             <ul>
                 <li><a href="{% url 'ini' %}"> Upload Question Bank</a></li>
@@ -67,5 +97,12 @@ $("#context-menu a").on("click", function() {
            <ul>
                 <li><a href="{% url 'choose_frqp' %}"> Add Question Paper</a></li>
             </ul>
-          </ul>
+           <li><a href="{% url 'lv' %}"> All Questions</a></li>
+
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        
+        <li><a href="{% url 'change_password' %}">Change Password</a></li>
+        
+        <li><a href="{% url 'change_email'%}">Change Email</a></li>
+        </ul>
      {% endblock %}

@@ -1,12 +1,19 @@
 {% extends "base_generic.html" %}
 {% block content %}
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript">
     	function myf(){
     		//alert('boo')
     		window.location.href="{% url 'ltable' %}"
     		document.ff.submit();
     	}
+        $(document).ready(function(){
+    $(".r").click(function(){
+        window.location = $(this).attr('href');
+        return false;
+    });
+});
     </script>
     <style>
         .trt{
@@ -15,6 +22,13 @@
         .trl{
             float: left;
         }
+    </style>
+    <style>
+     .r {
+    cursor: pointer;
+}
+
+.r:hover {background-color:#f5f5f5;}
     </style>
     <h2>Question Papers</h2>
             <table cellpadding="20">
@@ -27,15 +41,15 @@
                     <th> <center>Date </center></th>
                 </tr>
                 {% for r in data %}
-                <tr>
-                    <td><center><a href="{% url 'qpdet' r.id %}">
+                <tr class="r" href="{% url 'qpdet' r.id %}">
+                    <td><center>
                         {% if r.Name|length > 20 %}
                         {{r.Name|slice:"0:20"}} ...
                     {% else %}
                       
                       {{r.Name}}
                       
-                    {% endif %}</a></center>
+                    {% endif %}</center>
                     </td>
                     <td> <center>{{r.Marks | stringformat:"i"}}</center></td>
                     <td> {{r.Date}}</td>
@@ -43,7 +57,7 @@
                 {% endfor %}
             </table>
         </td>
-        <td>
+        <td valign="top">
             <div ><center>
             <form method="POST">
                 {%csrf_token%}
@@ -59,6 +73,7 @@
 
               {% block sidebar %}
         <ul class="sidebar-nav">
+          <li style="list-style-type: none;"><h3>Hi {{user.username}}</h3></li>
           <li><a href="{% url 'cv'%}">Question Banks</a>
             <ul>
                 <li><a href="{% url 'ini' %}"> Upload Question Bank</a></li>
@@ -68,6 +83,13 @@
            <ul>
                 <li><a href="{% url 'choose_frqp' %}"> Add Question Paper</a></li>
             </ul>
-          </ul>
+           <li><a href="{% url 'lv' %}"> All Questions</a></li>
+
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        
+        <li><a href="{% url 'change_password' %}">Change Password</a></li>
+        
+        <li><a href="{% url 'change_email'%}">Change Email</a></li>
+        </ul>
      {% endblock %}
        

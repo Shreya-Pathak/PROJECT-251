@@ -31,12 +31,6 @@
 </style>
 </head>
 <script type="text/javascript">
-  window.onunload = function() {
-    var state = {};
-  var title = "";
-  var url   = "{% url 'cv' %}"
-  history.replaceState(state, title, url);
-}
   function myf(){
     alert('Question submitted');
   }
@@ -49,6 +43,12 @@
 
 </script>
 <script type="text/javascript">
+  window.onunload = function() {
+    var state = {};
+  var title = "";
+  var url   = "{% url 'cv' %}"
+  history.replaceState(state, title, url);
+}
       function myf1(){
         //alert('boo')
         window.location.href="{% url 'cv' %}"
@@ -56,19 +56,13 @@
       }
       function oc(ele){
         var i = ele.getAttribute('id')
-        
+        alert('loo')
         var x=ele.parentElement;
-        
+        //alert(x)
         var t=x.querySelector("textarea.ta")
-        //alert(t)
         //alert(t.select())
         //alert(t.innerHTML)
-        if(t.value==""){
-          t.value=i;
-        }
-        else{
-        t.value+=','+i;
-      }
+        t.value+=','+i
       }
     </script>
 {% load crispy_forms_tags %}
@@ -77,12 +71,10 @@
     <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-         <h1>Edit Questions before Adding</h1>
+         <h1>Edit Question</h1>
    {% for owner_form in owner_forms %}
    <div>
     <h2>Question {{ owner_form.Qno }}<br></h2>
-     Suggested Tags : <button id="{{owner_form.t1}}" class="button" onclick="oc(this)">{{owner_form.t1}} : {{owner_form.p1}}%</button> <button id="{{owner_form.t2}}" class="button" onclick="oc(this)">{{owner_form.t2}} : {{owner_form.p2}}%</button> <button id="{{owner_form.t3}}" class="button" onclick="oc(this)">{{owner_form.t3}} : {{owner_form.p3}}%</button>
-     <br>
       <form class="petname_form" method="post">{% csrf_token %}  
          
          {{ owner_form.author_form|crispy }}
@@ -90,20 +82,15 @@
          <h2>Subquestions: <br></h2>
          {{ owner_form.formset|crispy }}
          {% endif %}
-
-      <div class="form-group">
-        <input type="submit" class="form-group" name="{{owner_form.bname}}" onclick="myf()" >
-       </div>
+        <button type="submit" onclick="myf1()">Submit</button>
       </form>
     </div>
    
     {% endfor %}
      
    
-    </form>
-     <div class="form-group">
-    <button type="button" onclick="myf1()">Submit</button>
-  </div>
+    
+     
 </div>
 
 </div>

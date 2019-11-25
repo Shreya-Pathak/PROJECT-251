@@ -1,7 +1,10 @@
-{% extends 'base.html' %}
 
+{% extends 'base.html' %}
 {% block content %}
   <h2>Log in to My Site</h2>
+  {% if user.is_authenticated %}
+  <p>You are already logged in. Please logout first.</p>
+  {% else %}
   {% if form.errors %}
     <p style="color: red">Your username and password didn't match. Please try again.</p>
   {% endif %}
@@ -22,4 +25,5 @@
     {% endfor %}
     <button type="submit">Log in</button>
   </form>
+  {% endif %}
 {% endblock %}
