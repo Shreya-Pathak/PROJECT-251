@@ -178,7 +178,7 @@ def detail(request,no):
 		kid = {'con':q.Content, 'ans':q.Answer, 'mar':q.Marks, 'i':i}
 		kidf.append(kid)
 	context = {'owner':qu.Owner, 'content':qu.Content, 'diff':qu.Difficulty, 'Answer': qu.Answer, 'tags':qu.tags, 'chap':qu.Chapter, 
-	'sec': qu.Section, 'kid':kidf, 'ism':qu.IsModule}
+	'sec': qu.Section, 'kid':kidf, 'ism':qu.IsModule, 'mar':qu.Marks}
 	request.session['qu']=no
 	return render(request, 'detail.html', context)
 
