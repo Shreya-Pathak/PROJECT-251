@@ -91,6 +91,7 @@ def iniparser(fpath):
 		while cv3<cv:
 			if(config.has_option(qs,'marks_'+str(cv3))):
 				qlist['marks_'+str(cv3)]=int(config[qs]['marks_'+str(cv3)])
+				total_sum=total_sum+int(config[qs]['marks_'+str(cv3)])
 			else:
 				qlist['marks_'+str(cv3)]=None
 			cv3=cv3+1
