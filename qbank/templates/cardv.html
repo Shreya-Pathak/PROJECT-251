@@ -58,7 +58,22 @@ $("#context-menu a").on("click", function() {
 
       {% block sidebar %}
         <ul class="sidebar-nav">
-          <li><a href='cv/'>Question Banks</a></li>
-          <li><a href='first/'>Question Papers</a></li>
-          </ul>
+          <li style="list-style-type: none;"><h3>Hi {{user.username}}</h3></li>
+          <li><a href="{% url 'cv'%}">Question Banks</a>
+            <ul>
+                <li><a href="{% url 'ini' %}"> Upload Question Bank</a></li>
+            </ul>
+          </li>
+          <li><a href="{% url 'ltable'%}">Question Papers</a></li>
+           <ul>
+                <li><a href="{% url 'choose_frqp' %}"> Add Question Paper</a></li>
+            </ul>
+           <li><a href="{% url 'lv' %}"> All Questions</a></li>
+
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        
+        <li><a href="{% url 'change_password' %}">Change Password</a></li>
+        
+        <li><a href="{% url 'change_email'%}">Change Email</a></li>
+        </ul>
      {% endblock %}

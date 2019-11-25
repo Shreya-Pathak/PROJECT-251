@@ -1,12 +1,27 @@
 {% extends "base_generic.html" %}
 {% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript">
     	function myf(){
     		//alert('boo')
     		window.location.href="{% url 'ltable' %}"
     		document.ff.submit();
     	}
+      $(document).ready(function(){
+    $(".r2").click(function(){
+        window.location = $(this).attr('href');
+        return false;
+    });
+});
     </script>
+    <style>
+     .r2 {
+    cursor: pointer;
+}
+
+.r1:hover {background-color:#f5f5f5;}
+</style>
         <h2> Make a Question Paper</h2>
         <br>
         <table cellpadding="4">
@@ -31,25 +46,25 @@
                     <th> Chapter </th>
                 </tr>
                 {% for r in data %}
-                <tr>
+                <tr class="r1">
                     <td><input type="checkbox" name="checks" value="{{r.id}}" /></td>
-                    <td><a href="{% url 'qpdet' r.id %}">
+                    <td class="r2" href="{% url 'detail' r.pk %}">
                         {% if r.Content|length > 20 %}
                         {{r.Content|slice:"0:20"}} ...
                     {% else %}
                       
                       {{r.Content}}
                       
-                    {% endif %}</a>
+                    {% endif %}
                     </td>
-                    <td> {{r.Marks | stringformat:"i"}}</td>
-                    <td> {{r.Chapter}}</td>
+                    <td class="r2" href="{% url 'qpdet' r.id %}"> {{r.Marks | stringformat:"i"}}</td>
+                    <td class="r2" href="{% url 'qpdet' r.id %}"> {{r.Chapter}}</td>
                 </tr>
                 {% endfor %}
             </table>
-           <center><button type="submit" value="Submit" name="maker">Make Qpaper</button></center></form>
+           <center><button type="submit" value="Submit" name="maker">Make Question Paper</button></center></form>
        </td>
-       <td align="center">
+       <td align="center" valign="top">
         <form method="POST">
                 {%csrf_token%}
             {{form.as_p}}
@@ -60,7 +75,8 @@
 </table>
          {% endblock %}
          {% block sidebar %}
- <ul class="sidebar-nav">
+          <ul class="sidebar-nav">
+          <li style="list-style-type: none;"><h3>Hi {{user.username}}</h3></li>
           <li><a href="{% url 'cv'%}">Question Banks</a>
             <ul>
                 <li><a href="{% url 'ini' %}"> Upload Question Bank</a></li>
@@ -70,5 +86,12 @@
            <ul>
                 <li><a href="{% url 'choose_frqp' %}"> Add Question Paper</a></li>
             </ul>
-          </ul>
+           <li><a href="{% url 'lv' %}"> All Questions</a></li>
+
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        
+        <li><a href="{% url 'change_password' %}">Change Password</a></li>
+        
+        <li><a href="{% url 'change_email'%}">Change Email</a></li>
+        </ul>
      {% endblock %}

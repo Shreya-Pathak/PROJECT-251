@@ -1,5 +1,19 @@
 {% extends "base_generic.html" %}
 {% block content %}
+{% load crispy_forms_tags %}
+<style>
+.button {
+  border: none;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 12px;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
 
     <script type="text/javascript">
     	function myf(){
@@ -7,6 +21,11 @@
     		window.location.href="{% url 'ltable' %}"
     		document.ff.submit();
     	}
+        function myf1(){
+            //alert('boo')
+            window.location.href="{% url 'qpsave' %}"
+            //document.ff.submit();
+        }
     </script>
     <h1>
         {{title}}
@@ -14,7 +33,7 @@
         
             <table cellpadding="10">
                 <tr>
-                    <th> Content 22 </th>
+                    <th> Content</th>
                     <th> Marks </th>
                     <th> Chapter </th>
                     <th> Section </th>
@@ -30,13 +49,13 @@
                       
                     {% endif %}
                     </td>
-                    <td> {{r.Marks | stringformat:"i"}}</td>
+                    <td> {{r.nmarks | stringformat:"i"}}</td>
                     <td> {{r.Chapter}}</td>
                     <td> {{r.Section}}</td>
                 </tr>
                 {% endfor %}
             </table>
-           
+           <button class="button" onclick="myf1()">Export as PDF</button>
        {% endblock %}
        {% block sidebar %}
  <ul class="sidebar-nav">
@@ -49,5 +68,6 @@
            <ul>
                 <li><a href="{% url 'choose_frqp' %}"> Add Question Paper</a></li>
             </ul>
+           <li><a href="{% url 'lv' %}"> All Questions</a></li>
           </ul>
      {% endblock %}
